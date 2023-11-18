@@ -1,0 +1,29 @@
+[
+  {
+    "id": 1,
+    "title": "Fanta",
+    "description": "Bebida",
+    "price": 1000,
+    "thumbnail": "jajaja",
+    "code": 12345,
+    "stock": 120
+  },
+  {
+    "id": 2,
+    "title": "Tomate",
+    "description": "Verdura",
+    "price": 1800,
+    "thumbnail": "tomatito.jpg",
+    "code": 123456,
+    "stock": 120
+  },
+  {
+    "id": 3,
+    "title": "Coca Cola",
+    "description": "Bebida",
+    "price": 2500,
+    "thumbnail": "coca-cola.jpg",
+    "code": 1234,
+    "stock": 120
+  }
+] 
