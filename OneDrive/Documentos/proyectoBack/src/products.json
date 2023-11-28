@@ -25,5 +25,23 @@
     "thumbnail": "coca-cola.jpg",
     "code": 1234,
     "stock": 120
+  },
+  {
+    "id": 4,
+    "title": "Sprite",
+    "description": "Bebida",
+    "price": 1800,
+    "thumbnail": "coca-cola.jpg",
+    "code": 1111,
+    "stock": 120
+  },
+  {
+    "id": 5,
+    "title": "Baggio",
+    "description": "Bebida",
+    "price": 1800,
+    "thumbnail": "juguitoBa.jpg",
+    "code": 1112,
+    "stock": 120
   }
-] 
+]
