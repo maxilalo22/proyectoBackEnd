@@ -1,5 +1,6 @@
 import express from 'express'
 import handlebars from 'express-handlebars'
+import mongoose from 'mongoose';
 import { createServer } from 'http'; 
 import { Server } from 'socket.io';
 import __dirname from './utils.js'
@@ -37,9 +38,25 @@ io.on('connection', (socket) => {
     });
 });
 
+const MONGODB_URL = "mongodb+srv://maxvenditti94:mendoza110@cluster0.zyyalew.mongodb.net/ecommerce";
+
+mongoose.connect(MONGODB_URL, {
+    dbName: "ecommerce",
+    serverSelectionTimeoutMS: 30000
+})
+    .then(() => {
+        console.log("DB connected");
+    })
+    .catch((e) => {
+        console.log("Can't connect to DB");
+        process.exit();
+    });
+
 
 httpServer.listen(8080, () => {
     console.log('Servidor corriendo en el puerto 8080!');
 });
+
+
 
 export { io };
