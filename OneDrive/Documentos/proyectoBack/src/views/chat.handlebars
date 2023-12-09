@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat</title>
+
+</head>
+<body>
+
+<h1>Chat en tiempo real</h1>
+
+<div id="chatMessages">
+    
+</div>
+
+<form id="messageForm">
+    <input type="text" id="userInput" placeholder="Tu nombre">
+    <input type="text" id="messageInput" placeholder="Escribe tu mensaje">
+    <button type="submit">Enviar</button>
+</form>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/chat.js"></script>
+</body>
+</html>

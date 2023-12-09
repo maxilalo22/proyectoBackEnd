@@ -46,7 +46,7 @@ const MONGODB_URL = "mongodb+srv://maxvenditti94:mendoza110@cluster0.zyyalew.mon
 mongoose.connect(MONGODB_URL, {
     dbName: "ecommerce",
     serverSelectionTimeoutMS: 30000,
-    socketTimeoutMS: 30000, // Añadir este parámetro
+    socketTimeoutMS: 30000, 
 })
 
     .then(() => {
