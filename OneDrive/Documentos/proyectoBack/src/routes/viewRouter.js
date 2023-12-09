@@ -1,17 +1,14 @@
 import { Router } from 'express';
-import ProductManager from '../DAO/services/mongoDB/productManager.js';
+import { productModel } from '../DAO/models/products.model.js';
 
 export const viewRouter = Router();
 
-const productManager = new ProductManager();
-
 viewRouter.get('/', async (req, res) => {
     try {
-        const products = productManager.getProducts();
-        console.log('Productos leídos correctamente:', products);
+        const products = await productModel.find().lean();
         res.render('home', { products });
     } catch (error) {
-        console.error(`Error al obtener productos desde el administrador de productos: ${error}`);
-        res.status(500).send('Error interno del servidor');
+        console.error('Error al obtener productos desde la base de datos:', error);
+        res.status(500).send('Internal Server Error');
     }
-});
+})

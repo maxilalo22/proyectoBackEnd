@@ -30,6 +30,9 @@ app.use(cartRouter);
 app.use('/', viewRouter);
 app.use('/realTimeProducts', realRouter);
 
+app.get('/home', (req, res) => {
+    res.render('home');
+});
 
 io.on('connection', (socket) => {
     console.log('Cliente conectado!');
@@ -42,8 +45,10 @@ const MONGODB_URL = "mongodb+srv://maxvenditti94:mendoza110@cluster0.zyyalew.mon
 
 mongoose.connect(MONGODB_URL, {
     dbName: "ecommerce",
-    serverSelectionTimeoutMS: 30000
+    serverSelectionTimeoutMS: 30000,
+    socketTimeoutMS: 30000, // Añadir este parámetro
 })
+
     .then(() => {
         console.log("DB connected");
     })
