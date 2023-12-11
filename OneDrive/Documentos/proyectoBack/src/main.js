@@ -36,8 +36,8 @@ app.get('/home', (req, res) => {
 
 io.on('connection', (socket) => {
     console.log('Cliente conectado!');
-    socket.on('updateProducts', (product) => {
-        socket.emit('updateProducts', product);
+    socket.on('updateProducts', (products) => {
+        socket.emit('updateProducts', products);
     });
 });
 
