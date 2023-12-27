@@ -5,19 +5,48 @@ export const productRouter = Router();
 
 productRouter.get('/api/products', async (req, res) => {
     try {
-        const limit = parseInt(req.query.limit);
-        let products;
+        const { limit = 10, page = 1, sort, query } = req.query;
+        const options = {
+            limit: parseInt(limit),
+            page: parseInt(page),
+            sort: sort === 'desc' ? { price: -1 } : { price: 1 },
+        };
 
-        if (!isNaN(limit)) {
-            products = await productModel.find().limit(limit).lean();
-        } else {
-            products = await productModel.find().lean();
+        const filter = {};
+
+        if (query) {
+            filter.$or = [
+                { title: { $regex: new RegExp(query, 'i') } },
+                { description: { $regex: new RegExp(query, 'i') } },
+            ];
         }
 
-        res.json(products);
+        const products = await productModel.paginate(filter, options);
+
+        const totalPages = products.totalPages;
+        const prevPage = products.prevPage || null;
+        const nextPage = products.nextPage || null;
+        const pageCurrent = products.page;
+        const hasPrevPage = products.hasPrevPage;
+        const hasNextPage = products.hasNextPage;
+        const prevLink = hasPrevPage ? `/api/products?limit=${limit}&page=${prevPage}&sort=${sort}&query=${query}` : null;
+        const nextLink = hasNextPage ? `/api/products?limit=${limit}&page=${nextPage}&sort=${sort}&query=${query}` : null;
+
+        res.json({
+            status: 'success',
+            payload: products.docs,
+            totalPages,
+            prevPage,
+            nextPage,
+            page: pageCurrent,
+            hasPrevPage,
+            hasNextPage,
+            prevLink,
+            nextLink,
+        });
     } catch (error) {
         console.error('Error al obtener productos desde la base de datos:', error);
-        res.status(500).send('Internal Server Error');
+        res.status(500).json({ status: 'error', error: 'Internal Server Error' });
     }
 });
 
@@ -27,7 +56,7 @@ productRouter.get('/api/products/:id', async (req, res) => {
         const product = await productModel.findById(productId).lean();
 
         if (product) {
-            res.json(product);
+            res.render('productDetails', { product });
         } else {
             res.status(404).send('Product not found');
         }

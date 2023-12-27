@@ -10,6 +10,9 @@ import { viewRouter } from './routes/viewRouter.js'
 import { realRouter } from './routes/realTimeRouter.js';
 import { chatRouter } from './routes/chatRouter.js';
 import { messageModel } from './DAO/models/message.model.js';
+import { apiRouter } from './routes/api/apiRest.router.js';
+import { webRouter } from './routes/web/web.router.js';
+import { sesiones } from './middlewares/sesiones.js'
 
 
 const app = express()
@@ -23,10 +26,15 @@ app.engine('handlebars', handlebars.engine())
 app.set('views', __dirname + '/views')
 app.set('view engine', 'handlebars')
 
+//app.use('/static', express.static('public'))
+
 app.use("/socket.io", express.static(__dirname + "/node_modules/socket.io/client-dist"));
 
 app.use(express.static(__dirname + '/public'))
 
+app.use(sesiones)
+app.use('/', webRouter)
+app.use('/api', apiRouter)
 app.use(productRouter);
 app.use(cartRouter);
 app.use('/', viewRouter);
