@@ -1,23 +1,10 @@
 import { Router } from 'express'
-import { onlyLogueadosWeb } from '../../middlewares/autorizacion.js'
+import { sesionesRouter } from './sesiones.router.js'
+import { usuariosRouter } from './usuarios.router.js'
 
 export const webRouter = Router()
 
-webRouter.get('/', (req, res) => {
-    res.redirect('/profile')
-})
+webRouter.use(sesionesRouter)
+webRouter.use(usuariosRouter)
 
-webRouter.get('/register', (req, res) => {
-    res.render('register.handlebars', { pageTitle: 'Registro' })
-})
-
-webRouter.get('/login', (req, res) => {
-    res.render('login.handlebars', { pageTitle: 'Login' })
-})
-
-webRouter.get('/profile', onlyLogueadosWeb, (req, res) => {
-    res.render('profile.handlebars', {
-        pageTitle: 'Perfil',
-        ...req.session['user']
-    })
-})
+webRouter.get('/', (req, res) => { return res.redirect('/login') })

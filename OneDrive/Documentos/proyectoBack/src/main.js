@@ -13,6 +13,7 @@ import { messageModel } from './DAO/models/message.model.js';
 import { apiRouter } from './routes/api/apiRest.router.js';
 import { webRouter } from './routes/web/web.router.js';
 import { sesiones } from './middlewares/sesiones.js'
+import { passportInitialize, passportSession } from './middlewares/autenticaciones.js'
 
 
 const app = express()
@@ -33,6 +34,7 @@ app.use("/socket.io", express.static(__dirname + "/node_modules/socket.io/client
 app.use(express.static(__dirname + '/public'))
 
 app.use(sesiones)
+app.use(passportInitialize, passportSession)
 app.use('/', webRouter)
 app.use('/api', apiRouter)
 app.use(productRouter);
