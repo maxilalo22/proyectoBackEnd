@@ -39,7 +39,8 @@ const schema = new mongoose.Schema({
                     email: usuario['email'],
                     nombre: usuario['nombre'],
                     apellido: usuario['apellido'],
-                    rol: 'usuario'
+                    rol: 'usuario',
+                    id: usuario['_id']
                 }
             }
             return datosUsuario
@@ -47,4 +48,10 @@ const schema = new mongoose.Schema({
     }
 })
 
+schema.options.toObject = {
+    transform: function (doc, ret) {
+      // Elimina el atributo 'atributoOculto' del resultado
+      delete ret.password;
+    }
+  };
 export const usuariosManager = mongoose.model(collection, schema)

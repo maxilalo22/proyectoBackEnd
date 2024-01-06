@@ -27,16 +27,3 @@ window.addEventListener('load', async () => {
     // @ts-ignore
     document.querySelector('div').style.display = 'block'
 })
-
-async function logout(event) {
-    const response = await fetch('/api/sesiones/current', {
-        method: 'DELETE'
-    })
-
-    if (response.status === 200) {
-        window.location.href = '/login'
-    } else {
-        const error = await response.json()
-        alert(error.message)
-    }
-}
