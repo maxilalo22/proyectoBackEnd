@@ -1,6 +1,5 @@
 import express from 'express'
-import handlebars from 'express-handlebars'
-import mongoose from 'mongoose';
+import { URL_MONGO_DB } from './config.js';
 import { createServer } from 'http'; 
 import { Server } from 'socket.io';
 import __dirname from './utils.js'
@@ -12,8 +11,10 @@ import { chatRouter } from './routes/chatRouter.js';
 import { messageModel } from './DAO/models/message.model.js';
 import { apiRouter } from './routes/api/apiRest.router.js';
 import { webRouter } from './routes/web/web.router.js';
-import { sesiones } from './middlewares/sesiones.js'
-import { passportInitialize, passportSession } from './middlewares/autenticaciones.js'
+import { handlebarsConf } from './config/handlebars.conf.js';
+import { mongoConf } from './config/mongodb.conf.js';
+import { sessionConf } from './config/session.conf.js';
+import { initializePassport } from './config/passport.conf.js';
 
 
 const app = express()
@@ -23,9 +24,7 @@ const io = new Server(httpServer);
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
-app.engine('handlebars', handlebars.engine())
-app.set('views', __dirname + '/views')
-app.set('view engine', 'handlebars')
+
 
 //app.use('/static', express.static('public'))
 
@@ -33,8 +32,11 @@ app.use("/socket.io", express.static(__dirname + "/node_modules/socket.io/client
 
 app.use(express.static(__dirname + '/public'))
 
-app.use(sesiones)
-app.use(passportInitialize, passportSession)
+handlebarsConf(app)
+mongoConf(URL_MONGO_DB)
+sessionConf(app,URL_MONGO_DB)
+initializePassport(app)
+
 app.use('/', webRouter)
 app.use('/api', apiRouter)
 app.use(productRouter);
@@ -80,23 +82,6 @@ io.on('connection', (socket) => {
         socket.broadcast.emit('userDisconnected', `${socket.username} se ha desconectado!`);
     });
 });
-
-
-const MONGODB_URL = "mongodb+srv://maxvenditti94:mendoza110@cluster0.zyyalew.mongodb.net/ecommerce";
-
-mongoose.connect(MONGODB_URL, {
-    dbName: "ecommerce",
-    serverSelectionTimeoutMS: 30000,
-    socketTimeoutMS: 30000, 
-})
-
-    .then(() => {
-        console.log("DB connected");
-    })
-    .catch((e) => {
-        console.log("Can't connect to DB");
-        process.exit();
-    });
 
 
 httpServer.listen(8080, () => {
