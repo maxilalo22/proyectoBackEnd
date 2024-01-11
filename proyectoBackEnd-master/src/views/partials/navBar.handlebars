@@ -1,9 +1,17 @@
 <footer>
   <nav>
     <ul>
+      <li><a href="/profile">Mi perfil</a></li>
+      {{#if logged}}
+      <li><a href='/api/sesiones/logout'>Desloguearme!</a></li>
+      {{else}}
       <li><a href="/register">Registro</a></li>
       <li><a href="/login">Login</a></li>
-      <li><a href="/profile">Mi perfil</a></li>
+      {{/if}}
     </ul>
   </nav>
 </footer>
+
+{{!-- CON ESTA LOGICA SI ESTA LOGEADO APARECE EL BOTON PARA 
+      SALIR Y SE OCULTAN REGISTRO Y LOGIN.
+ --}}

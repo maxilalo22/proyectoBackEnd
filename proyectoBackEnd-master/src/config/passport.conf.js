@@ -34,13 +34,26 @@ export const initializePassport = (app) => {
       },
       async (_, __, profile, done) => {
         let usuario = await usuariosManager.findOne({ email: profile.username })
-        if (!usuario) {
+                if (!usuario) {
           usuario = await usuariosManager.create({
             nombre: profile.displayName,
             email: profile.username,
           })
         }
-        done(null, usuario.toObject())
+
+        //PARA QUE FUNCIONE EL USUARIO SE TIENE QUE 
+        //SERIALIZAR Y DESERIALIZAR: LINEAS 60 Y 64
+        //NECESITAN EL 'ID' 
+
+        const datosUsuario = {
+          email: usuario.email,
+          nombre: usuario.nombre,
+          apellido: usuario.apellido,
+          rol: 'usuario',
+          id: usuario._id
+      }
+
+        done(null, datosUsuario)
       }
     )
   )
