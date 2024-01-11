@@ -15,8 +15,23 @@ viewRouter.get('/', async (req, res) => {
 
 viewRouter.get('/products', async (req, res) => {
     try {
+        //SI ESTA LOGEADO LE PASAMOS DATOS A LA VISTA
+        // ESTO HAY QUE HACER PORQUE ESTA VISTA SE PUEDE 
+        // VER SI NO ESTAS LOGEADO. 
+        // Y PARA MOSTRAR ESTOS DATOS PRIMERO VEMOS SI ESTA LOGEADO
+        const data = {}
+        if(req.user){
+            data.logged = true
+            data.nombre = req.user.nombre
+            data.apellido = req.user.apellido
+            data.email = req.user.email
+        }
+
         const products = await productModel.find().lean();
-        res.render('products', { products });
+        res.render('products', { 
+            products,
+            ...data
+        });
     } catch (error) {
         console.error('Error al obtener productos:', error);
         res.status(500).send('Internal Server Error');
