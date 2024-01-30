@@ -1,7 +1,7 @@
 import passport from 'passport'
 import { Strategy as LocalStrategy } from 'passport-local'
 import { Strategy as GithubStrategy } from 'passport-github2'
-import { usuariosManager } from '../DAO/models/usuarios.js'
+import { usuariosManager } from '../DAO/models/user.model.js'
 import { GITHUB_CALLBACK_URL, GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET } from '../config.js'
 
 export const initializePassport = (app) => {

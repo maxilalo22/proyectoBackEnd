@@ -8,8 +8,12 @@ const schema = new mongoose.Schema({
     _id: { type: String, default: randomUUID },
     email: { type: String, unique: true, required: true },
     password: { type: String, default: '(no aplica)' },
-    nombre: { type: String, required: true },
-    apellido: { type: String, default: '(sin especificar)' },
+    first_name: { type: String, required: true },
+    last_name: { type: String },
+    age: {type: Number},
+    cart: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Carts' }],
+    role: {type: String, default: 'user'}
+
 }, {
     strict: 'throw',
     versionKey: false,
@@ -20,9 +24,9 @@ const schema = new mongoose.Schema({
             if (email === 'adminCoder@coder.com' && password === 'adminCod3r123') {
                 datosUsuario = {
                     email: 'admin',
-                    nombre: 'admin',
-                    apellido: 'admin',
-                    rol: 'admin'
+                    first_name: 'admin',
+                    last_name: 'admin',
+                    role: 'admin'
                 }
             } else {
                 const usuario = await mongoose.model(collection).findOne({ email }).lean()
@@ -37,9 +41,10 @@ const schema = new mongoose.Schema({
 
                 datosUsuario = {
                     email: usuario['email'],
-                    nombre: usuario['nombre'],
-                    apellido: usuario['apellido'],
-                    rol: 'usuario',
+                    first_name: usuario['nombre'],
+                    last_name: usuario['apellido'],
+                    age: usuario['edad'],
+                    role: 'user',
                     id: usuario['_id']
                 }
             }
@@ -50,8 +55,7 @@ const schema = new mongoose.Schema({
 
 schema.options.toObject = {
     transform: function (doc, ret) {
-      // Elimina el atributo 'atributoOculto' del resultado
-      delete ret.password;
+        delete ret.password;
     }
-  };
+};
 export const usuariosManager = mongoose.model(collection, schema)

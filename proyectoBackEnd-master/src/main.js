@@ -3,11 +3,10 @@ import { URL_MONGO_DB } from './config.js';
 import { createServer } from 'http'; 
 import { Server } from 'socket.io';
 import __dirname from './utils.js'
-import {productRouter} from './routes/productRouter.js'
-import { cartRouter } from './routes/cartRouter.js'
-import { viewRouter } from './routes/viewRouter.js'
-import { realRouter } from './routes/realTimeRouter.js';
-import { chatRouter } from './routes/chatRouter.js';
+import {productRouter} from './routes/api/productRouter.js'
+import { cartRouter } from './routes/api/cartRouter.js'
+import { viewRouter } from './routes/web/viewRouter.js'
+import { chatRouter } from './routes/web/chatRouter.js';
 import { messageModel } from './DAO/models/message.model.js';
 import { apiRouter } from './routes/api/apiRest.router.js';
 import { webRouter } from './routes/web/web.router.js';
@@ -25,9 +24,6 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
 
-
-//app.use('/static', express.static('public'))
-
 app.use("/socket.io", express.static(__dirname + "/node_modules/socket.io/client-dist"));
 
 app.use(express.static(__dirname + '/public'))
@@ -37,13 +33,14 @@ mongoConf(URL_MONGO_DB)
 sessionConf(app,URL_MONGO_DB)
 initializePassport(app)
 
-app.use('/', webRouter)
-app.use('/api', apiRouter)
-app.use(productRouter);
+app.use('/', webRouter, viewRouter, chatRouter)
+app.use('/api', apiRouter, productRouter, cartRouter)
+
+
+/* app.use(productRouter);
 app.use(cartRouter);
 app.use('/', viewRouter);
-app.use('/realTimeProducts', realRouter);
-app.use('/chat', chatRouter)
+app.use('/chat', chatRouter) */
 
 app.get('/home', (req, res) => {
     res.render('home');

@@ -6,10 +6,10 @@ export const sesionesRouter = Router()
 
 sesionesRouter.post(
   '/',
-  passport.authenticate('loginLocal', {failWithError: true}),async (req, res, next) => {
-   req.session.save(()=>{
-    console.log('session guardada')
-   })
+  passport.authenticate('loginLocal', { failWithError: true }), async (req, res, next) => {
+    req.session.save(() => {
+      console.log('session guardada')
+    })
     res.status(201).json({ status: 'success', message: 'login success' })
   }
 )

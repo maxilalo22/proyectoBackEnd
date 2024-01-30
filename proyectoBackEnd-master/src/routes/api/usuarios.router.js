@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import { usuariosManager } from '../../DAO/models/usuarios.js'
+import { usuariosManager } from '../../DAO/models/user.model.js'
 import { soloLogueadosApi } from '../../middlewares/autorizacion.js'
 import { hashear } from '../../criptografia.js'
 

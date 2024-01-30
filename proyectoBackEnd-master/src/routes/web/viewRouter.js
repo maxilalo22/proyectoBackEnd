@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { productModel } from '../DAO/models/products.model.js';
+import { productModel } from '../../DAO/models/products.model.js';
 
 export const viewRouter = Router();
 
