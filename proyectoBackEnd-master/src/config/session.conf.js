@@ -1,6 +1,7 @@
 import session from 'express-session'
 import MongoStore from 'connect-mongo'
-import { SESSION_SECRET,} from '../config.js'
+import vars from '../config.js'
+
 
 
 export const sessionConf = (app, url) =>{
@@ -11,7 +12,7 @@ export const sessionConf = (app, url) =>{
         mongoOptions: {},
         ttl : 15
       }),
-      secret: SESSION_SECRET,
+      secret: vars.sessionSecret,
       resave: false,
       saveUninitialized: false
     })

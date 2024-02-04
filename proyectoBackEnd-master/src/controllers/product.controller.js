@@ -1,4 +1,4 @@
-import { productModel } from "../../DAO/models/products.model.js";
+import { productModel } from '../DAO/models/products.model.js'
 
 class ProductController {
     async getProducts(req, res) {

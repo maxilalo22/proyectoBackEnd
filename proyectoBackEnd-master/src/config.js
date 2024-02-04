@@ -8,5 +8,6 @@ export default {
     githubApp: process.env.GITHUB_APP_ID,
     githubClient: process.env.GITHUB_CLIENT_ID,
     gitClientSecret: process.env.GITHUB_CLIENT_SECRET,
-    githubCallback: process.env.GITHUB_CALLBACK_URL
+    githubCallback: process.env.GITHUB_CALLBACK_URL,
+    mongoUrl: process.env.URL_MONGO_DB
 }

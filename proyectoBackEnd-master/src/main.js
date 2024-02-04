@@ -1,5 +1,5 @@
 import express from 'express'
-import { URL_MONGO_DB } from './config.js';
+import vars from './config.js';
 import { createServer } from 'http'; 
 import { Server } from 'socket.io';
 import __dirname from './utils.js'
@@ -29,8 +29,8 @@ app.use("/socket.io", express.static(__dirname + "/node_modules/socket.io/client
 app.use(express.static(__dirname + '/public'))
 
 handlebarsConf(app)
-mongoConf(URL_MONGO_DB)
-sessionConf(app,URL_MONGO_DB)
+mongoConf(vars.mongoUrl)
+sessionConf(app,vars.mongoUrl)
 initializePassport(app)
 
 app.use('/', webRouter, viewRouter, chatRouter)

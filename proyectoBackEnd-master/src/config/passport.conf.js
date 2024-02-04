@@ -2,7 +2,8 @@ import passport from 'passport'
 import { Strategy as LocalStrategy } from 'passport-local'
 import { Strategy as GithubStrategy } from 'passport-github2'
 import { usuariosManager } from '../DAO/models/user.model.js'
-import { GITHUB_CALLBACK_URL, GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET } from '../config.js'
+import vars from '../config.js'
+
 
 export const initializePassport = (app) => {
   passport.use(
@@ -28,9 +29,9 @@ export const initializePassport = (app) => {
     'loginGithub',
     new GithubStrategy(
       {
-        clientID: GITHUB_CLIENT_ID,
-        clientSecret: GITHUB_CLIENT_SECRET,
-        callbackURL: GITHUB_CALLBACK_URL,
+        clientID: vars.githubClient,
+        clientSecret: vars.gitClientSecret,
+        callbackURL: vars.githubCallback,
       },
       async (_, __, profile, done) => {
         let usuario = await usuariosManager.findOne({ email: profile.username })
