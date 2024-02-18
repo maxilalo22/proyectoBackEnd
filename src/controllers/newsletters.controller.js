@@ -21,8 +21,6 @@ export async function deleteController(req, res, next) {
 }
 
 
-// para pruebas!! luego se hace un cron job
-//[REF. TO-> NPM-https://www.npmjs.com/package/node-cron]
 
 // enviar newsletters
 export async function postEnviarController(req, res, next) {

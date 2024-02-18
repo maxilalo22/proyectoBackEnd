@@ -9,7 +9,7 @@ export class TiendasService {
     async registrar(datosTienda) {
         const tienda = new Tienda(datosTienda)
         const tiendaPojo = await this.tiendasDao.create(tienda.toPOJO())
-
+        
         return tiendaPojo
     }
 

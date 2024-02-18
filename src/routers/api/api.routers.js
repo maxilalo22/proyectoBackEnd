@@ -7,6 +7,7 @@ import { cartsRouter } from './carts.router.js';
 import { ordersRouter } from './orders.router.js';
 import { manejoDeErrores } from '../../middlewares/manejoDeErrores.js';
 import { respuestasMejoradas } from '../../middlewares/respuestasMejoradas.js';
+import { newsletterRouter } from './newsletters.router.js';
 
 export const apiRouter = Router();
 
@@ -20,5 +21,7 @@ apiRouter.use('/bebidas', bebidasRouter);
 apiRouter.use('/tiendas', tiendasRouter);
 apiRouter.use("/carts", cartsRouter);
 apiRouter.use("/orders", ordersRouter);
+apiRouter.use("/newsletter", newsletterRouter );
+
 
 apiRouter.use(manejoDeErrores);
