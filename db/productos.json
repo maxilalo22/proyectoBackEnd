@@ -1,0 +1,12 @@
+[
+  {
+    "_id": "07751e9a-f423-4c89-8a8d-e81050880f54",
+    "nombre": "Coca Cola",
+    "precio": "1200"
+  },
+  {
+    "_id": "591e4638-fcef-425f-b8c0-75e3b0a3f8fc",
+    "nombre": "Fernet",
+    "precio": "7500"
+  }
+]

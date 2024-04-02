@@ -1,0 +1,14 @@
+[
+  {
+    "_id": "013ec83f-fade-41a5-8a83-2107beee2ba1",
+    "nombre": "Alfonso Prat",
+    "email": "alfonsoprat@example.com",
+    "password": "eyJhbGciOiJIUzI1NiJ9.ZXlKaGJHY2lPaUpJVXpJMU5pSjkuWTI5dWRISmhjMlhEc1dFeE1qTS50SVQ1RWtmQldnUndCbTVJVDJQamNqUHZlVUd6XzgzREd2b25JQ1RUckJN.kBGV5yQqcHCKhXLJFpGeM54hrOp8aEJjxI2eXJUPJ_A"
+  },
+  {
+    "_id": "ab9164b7-6b71-47c7-b036-fec95f2483cd",
+    "nombre": "Maximo Ven",
+    "email": "maximiven@example.com",
+    "password": "eyJhbGciOiJIUzI1NiJ9.ZXlKaGJHY2lPaUpJVXpJMU5pSjkuWTI5dWRISmhjMlhEc1dFeE1qTS50SVQ1RWtmQldnUndCbTVJVDJQamNqUHZlVUd6XzgzREd2b25JQ1RUckJN.kBGV5yQqcHCKhXLJFpGeM54hrOp8aEJjxI2eXJUPJ_A"
+  }
+]
