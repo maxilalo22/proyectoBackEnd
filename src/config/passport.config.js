@@ -44,22 +44,7 @@ const initializePassport = () => {
     });
     
 
-    /* passport.use('login', new LocalStrategy({ usernameField: 'email' }, async (username, password, done) => {
-        try {
-            const user = await usuariosDao.readOne({ email: username });
-            if (!user) {
-                console.log('Usuario inexistente');
-                return done(null, false);
-            }
-            if (!isValidPassword(user, password)) {
-                console.log('Contraseña incorrecta');
-                return done(null, false);
-            }
-            return done(null, user);
-        } catch (error) {
-            return done(error);
-        }
-    })); */
+   
 };
 passport.use('login', new LocalStrategy({ usernameField: 'email', passReqToCallback: true }, async (req, email, password, done) => {
     try {
@@ -87,13 +72,23 @@ passport.use('login', new LocalStrategy({ usernameField: 'email', passReqToCallb
     }
 }));
 
-
-
-
-
-
 export default initializePassport;
 
 
-
+ /* passport.use('login', new LocalStrategy({ usernameField: 'email' }, async (username, password, done) => {
+        try {
+            const user = await usuariosDao.readOne({ email: username });
+            if (!user) {
+                console.log('Usuario inexistente');
+                return done(null, false);
+            }
+            if (!isValidPassword(user, password)) {
+                console.log('Contraseña incorrecta');
+                return done(null, false);
+            }
+            return done(null, user);
+        } catch (error) {
+            return done(error);
+        }
+    })); */
 

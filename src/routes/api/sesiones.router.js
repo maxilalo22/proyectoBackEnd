@@ -47,90 +47,55 @@ sesionesRouter.delete('/current', removeJwtFromCookies, (req, res) => {
     res['ok']({ message: 'Logout OK' });
 }); */
 
-import { Router } from "express";
-import { auth } from '../../middlewares/authentication.js'
-import passport from  'passport'
+import { Router } from 'express';
+import { auth } from '../../middlewares/authentication.js';
+import passport from 'passport';
 
 export const sesionesRouter = Router();
 
 sesionesRouter.get('/', (req, res) => {
-    res.send('BIENVENIDO!!!')
-})
+    res.send('¡BIENVENIDO!');
+});
 
 sesionesRouter.get('/login', passport.authenticate('login', { failureRedirect: '/faillogin' }), (req, res) => {
-    console.log("User authenticated:", req.user);
-    // Si la autenticación fue exitosa, la sesión ya se ha establecido correctamente
-    // Ahora establecemos req.session.user y req.session.admin según corresponda
+    console.log('Usuario autenticado:', req.user);
     if (req.user) {
         req.session.user = req.user.email;
         req.session.admin = req.user.role === 'admin';
-        res.send({ status: "success", payload: req.user });
+        const usuarioDTO = {
+            nombre: req.user.name,
+            email: req.user.email,
+        };
+        res.send({ status: 'success', payload: usuarioDTO });
     } else {
-        res.status(400).send({ status: "error", error: "Invalid credentials" });
+        res.status(400).send({ status: 'error', error: 'Credenciales inválidas' });
     }
 });
-
-
-
-/* sesionesRouter.get('/login', passport.authenticate('login', {failureRedirect:'/faillogin'}),  setSession, (req, res) => {
-    if(!req.user) return res.status(400).send({status:"error", error:"Invalid Credentials"})
-    req.session.user ={
-        name: req.user.name,
-        email: req.user.email,
-    }
-    req.session.admin={
-        name: req.user.name,
-        email:req.user.email,
-    }
-    res.send({status:"success",payload:req.user})
-    /* const email = req.body.email;
-    const password = req.body.password;
-
-    // Verificar si se proporcionaron email y password en el cuerpo de la solicitud
-    if (email && password) {
-        // Verificar si se trata del administrador
-        if (email === 'admin@admin.com' && password === 'admin') {
-            // Si es el administrador, establecer la sesión para el administrador
-            req.session.user = email;
-            req.session.admin = true;
-            return res.send('login success as admin!');
-        } else {
-            if (email && password)
-            req.session.user = email;
-            req.session.admin = false; // No es un administrador
-            return res.send('login success as normal user!');
-        }
-    } else {
-        // Si falta el correo electrónico o la contraseña, devolver un mensaje de error de datos faltantes
-        return res.status(400).send({ message: 'Faltan datos por enviar' });
-    } 
-}); */
 
 sesionesRouter.get('/faillogin', (req, res) => {
-    console.log('Failed login attempt');
-    res.status(401).send({ error: "Failed login attempt" });
+    console.log('Intento de inicio de sesión fallido');
+    res.status(401).send({ error: 'Intento de inicio de sesión fallido' });
 });
 
-
 sesionesRouter.get('/privado', auth, (req, res) => {
-    res.send('si estas viendo esto es porque ya te logueaste!')
-})
+    res.send('¡Bienvenido Admin!');
+});
 
 sesionesRouter.get('/logout', (req, res) => {
     req.session.destroy((err) => {
         if (err) {
-            return res.status(500).json({ status: 'logout error', body: err })
+            return res.status(500).json({ status: 'error al cerrar sesión', body: err });
         }
-        res.send('Logout ok')
-    })
-})
-
-sesionesRouter.post('/register', passport.authenticate('register',{failureRedirect:'/failregister'}), async(req,res)=>{
-    res.send({status: "success", message: "User registered"})
-})
-
-sesionesRouter.get('/failregister', async (req, res) => {
-    console.log('Failed Strategy');
-    res.send({ error: "Failed" });
+        res.send('Cierre de sesión correcto');
+    });
 });
+
+sesionesRouter.get('/current', passport.authenticate('login', { session: false }), function (req, res) {
+    const usuarioDTO = {
+        nombre: req.user.nombre,
+        email: req.user.email,
+    };
+    res.send({ status: 'success', payload:  usuarioDTO  }); 
+});
+
 

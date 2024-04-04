@@ -146,7 +146,6 @@ export async function auth(req, res, next) {
     console.log("Session user:", req.session.user);
     console.log("Session admin:", req.session.admin);
 
-    // Verificar si el usuario está autenticado y es administrador
     if (req.isAuthenticated() && req.session.admin) {
         
         console.log("Authentication successful!");

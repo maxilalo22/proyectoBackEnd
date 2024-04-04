@@ -14,6 +14,7 @@ export async function postController(req, res, next) {
         const producto = await productService.agregarProducto(req.body)
         res.created(producto)
     } catch (error) {
+        console.log("Error en postController:", error);
         next(error)
     }
 }

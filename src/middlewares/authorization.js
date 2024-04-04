@@ -1,6 +1,20 @@
-export function tieneRol(roles) {
-    return function (req, res, next) {
-        if (roles.includes(req.user.rol)) return next()
-        res.sendStatus(403)
-    }
+import passport from 'passport'
+
+
+
+function authorizeRole(roles) {
+    return (req, res, next) => {
+        if (!req.user || !roles.includes(req.user.role)) {
+            return res.status(403).json({ message: 'Prohibido: Acceso denegado' });
+        }
+        next();
+    };
 }
+
+export const currentMiddleware = passport.authenticate('login', { session: false });
+export const currentAdminMiddleware = authorizeRole(['admin'])
+
+
+
+
+
