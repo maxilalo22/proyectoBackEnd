@@ -13,6 +13,8 @@ function authorizeRole(roles) {
 
 export const currentMiddleware = passport.authenticate('login', { session: false });
 export const currentAdminMiddleware = authorizeRole(['admin'])
+export const currentUserMiddleware = authorizeRole(['user']);
+
 
 
 

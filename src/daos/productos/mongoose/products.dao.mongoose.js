@@ -17,22 +17,23 @@ export class ProductsDaoMongoose {
     }
 
     async readMany(query) {
-        return toPOJO(await this.productsModel.find(query).lean())
+        try {
+            const products = await this.productsModel.find(query).lean();
+            return toPOJO(products);
+        } catch (error) {
+            throw new Error(`Error al leer productos: ${error.message}`);
+        }
     }
+    
 
     async updateOne(query, data) {
-        throw new Error('NOT IMPLEMENTED')
-    }
-
-    async updateMany(query, data) {
-        throw new Error('NOT IMPLEMENTED')
+        const updatedProduct = await this.productsModel.findOneAndUpdate(query, data, { new: true }).lean();
+        return toPOJO(updatedProduct);
     }
 
     async deleteOne(query) {
-        throw new Error('NOT IMPLEMENTED')
-    }
-
-    async deleteMany(query) {
-        throw new Error('NOT IMPLEMENTED')
+        const deletedProduct = await this.productsModel.findOneAndDelete(query).lean();
+        return toPOJO(deletedProduct);
     }
 }
+

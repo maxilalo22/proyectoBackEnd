@@ -8,6 +8,7 @@ import {getSmsService} from './sms/sms.service.js'
 import {UsuariosService} from './usuarios.services.js'
 import { getDaoProductos } from '../daos/productos/products.dao.js'
 import { getDaoUsuarios } from '../daos/usuarios/usuarios.dao.js'
+import { getDaoOrders } from '../daos/orders/order.dao.js'
 
 const tiendasDao = getDaoTiendas()
 const emailService = getEmailService()
@@ -19,4 +20,6 @@ export const newslettersService = new NewslettersService({ suscriptoresDao, emai
 const smsService = getSmsService()
 const usuariosDao = getDaoUsuarios()
 const productosDao = getDaoProductos()
+
+const ordersDao = getDaoOrders()
 export const usuariosService = new UsuariosService({smsService, usuariosDao, productosDao })

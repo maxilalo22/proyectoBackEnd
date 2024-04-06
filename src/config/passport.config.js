@@ -42,10 +42,9 @@ const initializePassport = () => {
             return done(error);
         }
     });
-    
-
-   
 };
+
+
 passport.use('login', new LocalStrategy({ usernameField: 'email', passReqToCallback: true }, async (req, email, password, done) => {
     try {
         const user = await usuariosDao.readOne({ email: email });

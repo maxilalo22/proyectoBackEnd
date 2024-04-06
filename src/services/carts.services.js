@@ -38,9 +38,14 @@ class CartsService {
     }
 
     async createOne() {
+        
+        const newCartData = {
+                userId: req.user.id, 
+            }
+
         try {
             const newCart = new CartModel({});
-            const createdCart = await this.cartDao.createOne(newCart);
+            const createdCart = await this.cartDao.createOne(newCart, newCartData);
             if (!createdCart) {
                 const error = new Error("No se pudo crear el carrito");
                 error.code = errorMan.UNEXPECTED_ERROR;
@@ -49,6 +54,19 @@ class CartsService {
             return createdCart;
         } catch (error) {
             throw new Error(`Error en CartsService.createOne: ${error}`);
+        }
+    }
+    async createOne(userId) {
+        try {
+            const newCartData = {
+                userId: userId, // Asignar el ID del usuario al campo userId del carrito
+                // Otros datos del carrito si los hay
+            };
+
+            const newCart = await this.cartDao.createOne(newCartData);
+            return newCart;
+        } catch (error) {
+            throw new Error(`Error en CartsService.createOne: ${error.message}`);
         }
     }
 

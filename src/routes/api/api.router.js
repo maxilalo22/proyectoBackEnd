@@ -7,6 +7,7 @@ import { tiendasRouter } from './tiendas.router.js'
 import { newslettersRouter } from './newsletters.router.js'
 import { cartsRouter } from './carts.router.js'
 import { sesionesRouter } from './sesiones.router.js'
+import { ordersRouter } from './order.router.js'
 
 export const apiRouter = Router()
 
@@ -21,5 +22,6 @@ apiRouter.use('/usuarios', usuariosRouter)
 apiRouter.use('/tiendas', tiendasRouter)
 apiRouter.use('/newsletters', newslettersRouter)
 apiRouter.use('/sesiones', sesionesRouter);
+
 
 apiRouter.use(manejoDeErrores)

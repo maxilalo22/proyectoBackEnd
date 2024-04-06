@@ -25,6 +25,10 @@ export class UsuariosService {
     
         return await this.usuariosDao.create({ ...usuario.toPOJO(), password: encryptedPassword });
     }
+
+    async obtenerUsuarioPorId(idUsuario) {
+        return await this.usuariosDao.findById(idUsuario);
+    }
     
     async comprarProducto(idUsuario, idProducto) {
         const usuario = await this.usuariosDao.readOne({ _id: idUsuario })
@@ -41,4 +45,3 @@ export class UsuariosService {
 }
 
 
-//export const usuariosService = new UsuariosService()

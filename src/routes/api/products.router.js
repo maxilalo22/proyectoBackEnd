@@ -1,8 +1,10 @@
 import { Router } from 'express'
-import { getController, postController } from '../../controllers/productos/product.controller.js'
-import { currentAdminMiddleware, currentMiddleware } from '../../middlewares/authorization.js'
+import { deleteController, getController, postController, putController } from '../../controllers/productos/product.controller.js'
+import { currentAdminMiddleware } from '../../middlewares/authorization.js'
 
 export const productsRouter = Router()
 
-productsRouter.get('/', currentMiddleware, getController)
+productsRouter.get('/', getController)
 productsRouter.post('/', currentAdminMiddleware, postController)
+productsRouter.put('/:pId', currentAdminMiddleware, putController);
+productsRouter.delete('/:pId', currentAdminMiddleware, deleteController);

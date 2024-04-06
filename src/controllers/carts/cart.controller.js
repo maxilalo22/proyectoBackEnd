@@ -40,7 +40,8 @@ export async function getCartController(req, res, next) {
 
 export async function postCartController(req, res, next) {
     try {
-        const newCart = await cartsService.createOne();
+        const userId = req.session.passport.user; // Obtener el ID del usuario de la sesión
+        const newCart = await cartsService.createOne(userId);
         if (!newCart) {
             const error = new Error("No se pudo crear el carrito");
             error.code = errorMan.UNEXPECTED_ERROR;
@@ -52,6 +53,9 @@ export async function postCartController(req, res, next) {
         next(error);
     }
 }
+
+
+
 
 export async function addProductToCartController(req, res, next) {
     try {
